@@ -1,6 +1,6 @@
 import scala.swing._
 
-object QuickHealDesktop extends SimpleGUIApplication {
+object QuickHealDesktop extends SimpleSwingApplication {
 	def top = new MainFrame {
 		title = "Quick Heal"
 		val button = new Button {
