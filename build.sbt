@@ -19,6 +19,6 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 libraryDependencies ++= Seq(
 	"org.scalatest" %% "scalatest" % "1.9.1" % "test",
-	"org.scala-lang" % "scala-swing" % "2.10.2"
+	"org.scala-lang" % "scala-swing" % "2.10.1"
 )
 
