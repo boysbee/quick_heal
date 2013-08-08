@@ -2,9 +2,9 @@ import scala.swing._
 
 object QuickHealDesktop extends SimpleGUIApplication {
 	def top = new MainFrame {
-		title = "Second Swing App"
+		title = "Quick Heal"
 		val button = new Button {
-			text = "Click me"
+			text = "Find"
 		}
 		val label = new Label {
 			text = "No button clicks registered"
