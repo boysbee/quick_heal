@@ -1,5 +1,5 @@
 import scala.swing._
-import scala.swing.event.{TableRowsSelected, TableEvent, TableColumnsSelected, ButtonClicked}
+import scala.swing.event.{TableRowsSelected, TableEvent, TableColumnsSelected, ButtonClicked,SelectionChanged,WindowClosing}
  
 case class TableColumnHeaderSelected(override val source:Table, column: Int) extends TableEvent(source)
 
@@ -9,8 +9,8 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
 	val headers = Seq("Job-Name","UCR #","Discount","Business Owner","Developer")
 	val rowData = Array[Array[Any]](List("CSADDCSEGMENT","TTHP-966BGE","DIR040","Thitaree Thongnamsap","Nattaporn Chatmalairut").toArray,
-		Array("CSDCMNPO2R","SNGK-94U6HP", "DIR040","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray,
-		Array("CSDCMNPO2R","SNGK-94U6HP","DIR042","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray)
+		List("CSDCMNPO2R","SNGK-94U6HP", "DIR040","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray,
+		List("CSDCMNPO2R","SNGK-94U6HP","DIR042","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray)
 	
 	
 	val table  = new Table(rowData, headers){
@@ -49,9 +49,11 @@ object QuickHealDesktop extends SimpleSwingApplication {
 	// -- add listener
 	listenTo(table.selection)
 	listenTo(searchButton)
+	listenTo(searchSelect.selection)
 
 
     reactions += {
+    	case WindowClosing(e) => System.exit(0)
 		case TableRowsSelected(source, range, false) =>
 		outputSelection(source, "Rows selected, changes: %s" format range)
 		case TableColumnsSelected(source, range, false) =>
@@ -59,6 +61,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		case TableColumnHeaderSelected(source, column) =>
 		outputSelection(source, "Column header %s selected" format column)
 		case ButtonClicked(`searchButton`) => findResult()
+		case SelectionChanged(`searchSelect`) => searchSelectType()
 		//case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
 
     }
@@ -118,6 +121,31 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
 	def findResult(){
 		val searchText = searchTextField.text
-		println("search : %s " format ( searchText))
+		if( "" equals searchType) {
+			searchType = "Discount Code"
+		}
+		println("search : %s , search type : %s" format ( searchText , searchType))
+		val quickHeal = new QuickHeal
+		var result = Array[Array[Any]]()
+		searchType match {
+
+			case "Discount Code" => result =  quickHeal.findJobListByDiscountCode(searchText)
+			case "Job-Name" => result = quickHeal.findJobListByJobName(searchText)
+		}
+		
+	}
+
+	// selected valud from searchSelect
+	var searchType = ""
+	def searchSelectType() {
+		val selected = searchSelect.selection.item 
+
+		if( "" equals selected) {
+			searchType = "Discount Code"
+		}
+		else
+		{
+			searchType = selected
+		}
 	}
 }
