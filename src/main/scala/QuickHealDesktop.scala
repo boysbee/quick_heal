@@ -3,15 +3,54 @@ import scala.swing.event.{TableRowsSelected, TableEvent, TableColumnsSelected, B
  
 case class TableColumnHeaderSelected(override val source:Table, column: Int) extends TableEvent(source)
 
+
 object QuickHealDesktop extends SimpleSwingApplication {
 	setSystemLookAndFeel()
 
-	var searchPanel = makeSearchPanel()
+	val headers = Seq("Job-Name","UCR #","Discount","Business Owner","Developer")
+	val rowData = Array[Array[Any]](List("CSADDCSEGMENT","TTHP-966BGE","DIR040","Thitaree Thongnamsap","Nattaporn Chatmalairut").toArray,
+		Array("CSDCMNPO2R","SNGK-94U6HP", "DIR040","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray,
+		Array("CSDCMNPO2R","SNGK-94U6HP","DIR042","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray)
+	
+	
+	val table  = new Table(rowData, headers){
+		selection.elementMode = Table.ElementMode.Cell
 
-	var resultPanel = makeResultPanel()
+	val header = {
+		import java.awt.event.{MouseEvent, MouseAdapter}
 
-
+		val makeHeaderEvent = TableColumnHeaderSelected(this, _:Int)
+		val tableHeader = peer.getTableHeader
+		tableHeader.addMouseListener(new MouseAdapter() {
+			override def mouseClicked(e: MouseEvent) {
+				selection.publish(makeHeaderEvent(tableHeader.columnAtPoint(e.getPoint)))
+			}
+		})
+		tableHeader
+		}
+	}
  
+
+	// search panel select
+	val searchLabel = new Label {
+		text = "Select a search criteria :"
+	}
+	// search text field
+	var searchTextField = new TextField {
+		columns = 10
+	}
+	// search criteria combo box
+	val searchSelect = new ComboBox(List("Discount Code","Job Name"))
+	// find button
+	val searchButton = new Button {
+		text = "Find"
+	}
+
+	// -- add listener
+	listenTo(table.selection)
+	listenTo(searchButton)
+
+
     reactions += {
 		case TableRowsSelected(source, range, false) =>
 		outputSelection(source, "Rows selected, changes: %s" format range)
@@ -19,8 +58,15 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		outputSelection(source, "Columns selected, changes: %s" format range)
 		case TableColumnHeaderSelected(source, column) =>
 		outputSelection(source, "Column header %s selected" format column)
-		case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
+		case ButtonClicked(`searchButton`) => findResult()
+		//case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
+
     }
+
+
+	var searchPanel = makeSearchPanel()
+
+	var resultPanel = makeResultPanel()
 
 	def top = new MainFrame {
 		title = "Quick Heal"
@@ -38,20 +84,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 	}
 
 	def makeSearchPanel() : FlowPanel = {
-		// search panel select
-		val searchLabel = new Label {
-			text = "Select a search criteria :"
-		}
-		// search text field
-		var searchTextField = new TextField {
-			columns = 10
-		}
-		// search criteria combo box
-		val searchSelect = new ComboBox(List("Discount Code","Job Name"))
-		// find button
-		val searchButton = new Button {
-			text = "Find"
-		}
+
 		// search panel
 		var searchPanel = new FlowPanel {
 			contents += searchLabel
@@ -63,27 +96,10 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		return searchPanel;
 	}
 
+	
 	def makeResultPanel() : BoxPanel = {
-		val headers = Array.tabulate(10) {"Col-" + _}.toSeq
-		val rowData = Array.tabulate[Any](10, 10) {"" + _ + ":" + _}
-		val table  = new Table(rowData, headers){
-			selection.elementMode = Table.ElementMode.Cell
 
-		val header = {
-			import java.awt.event.{MouseEvent, MouseAdapter}
 
-			val makeHeaderEvent = TableColumnHeaderSelected(this, _:Int)
-			val tableHeader = peer.getTableHeader
-			tableHeader.addMouseListener(new MouseAdapter() {
-				override def mouseClicked(e: MouseEvent) {
-					selection.publish(makeHeaderEvent(tableHeader.columnAtPoint(e.getPoint)))
-				}
-			})
-			tableHeader
-			}
-		}
-
-		listenTo(table.selection)
 		// result panel
 		var resultPanel = new BoxPanel(Orientation.Vertical) {		
 			contents += new ScrollPane(table)
@@ -98,5 +114,10 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		val cols = table.selection.columns.mkString(", ")
 		println("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
 		//output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
+	}
+
+	def findResult(){
+		val searchText = searchTextField.text
+		println("search : %s " format ( searchText))
 	}
 }
