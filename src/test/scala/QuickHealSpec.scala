@@ -18,7 +18,7 @@ class QuickHealSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 			var result = quickHeal.findJobListByDiscountCode(discountCode)
 			then("result list job")
 			assert(null != result)
-			result.length should be (2)
+			result.length should be (3)
 		}
 	}
 }
