@@ -10,7 +10,7 @@ scalaVersion := "2.10.2"
 
 organization := "th.co.truecorp.csm"
 
-unmanagedBase <<= baseDirectory { base => base / "lib_managed" }
+unmanagedBase <<= baseDirectory { base => base / "lib" }
 
 unmanagedJars in Compile <++= baseDirectory map { base =>
     val baseDirectories = (base / "lib_managed")
