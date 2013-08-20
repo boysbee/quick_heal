@@ -128,9 +128,8 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		val quickHeal = new QuickHeal
 		var result = Array[Array[Any]]()
 		searchType match {
-
 			case "Discount Code" => result =  quickHeal.findJobListByDiscountCode(searchText)
-			case "Job-Name" => result = quickHeal.findJobListByJobName(searchText)
+			case "Job Name" => result = quickHeal.findJobListByJobName(searchText)
 		}
 		
 	}
