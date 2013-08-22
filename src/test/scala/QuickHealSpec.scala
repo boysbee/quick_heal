@@ -10,15 +10,28 @@ class QuickHealSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 
 	"A QuickHeal " - {
 
-		"Should return result list of job name" in {
+		"It should find with discount code" in {
 			val quickHeal = fixure.quickHeal
-			given("discount code")
+			given("a discount code")
 			var discountCode = "DIR040"
 			when("use findJobListByDiscountCode")
 			var result = quickHeal.findJobListByDiscountCode(discountCode)
-			then("result list job")
+			then("result array")
 			assert(null != result)
-			result.length should be (3)
+			
+
+		}
+
+		"It should find with job name" in {
+			val quickHeal = fixure.quickHeal
+			given("a job name")
+			var jobName = "CSDCMNPO2R"
+			when("use findJobListByJobName")
+			var result = quickHeal.findJobListByJobName(jobName)
+			then("result array")
+			assert(null != result)
+			
+			
 		}
 	}
 }
