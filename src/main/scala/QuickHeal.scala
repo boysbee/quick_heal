@@ -1,13 +1,20 @@
+import db.{DB}
 class QuickHeal {
-	def findJobListByDiscountCode(discountCode : String) : Array[Array[Any]] = {
-		return Array[Array[Any]](List("CSADDCSEGMENT","TTHP-966BGE","DIR040","Thitaree Thongnamsap","Nattaporn Chatmalairut").toArray,
-		Array("CSDCMNPO2R","SNGK-94U6HP", "DIR040","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray,
-		Array("CSDCMNPO2R","SNGK-94U6HP","DIR042","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray)
+	// val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
+	val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
+	val user = "amdapp22"
+	val pass = "amdapp22"
+	val db = DB(url,user,pass)
+
+	def findJobListByDiscountCode(discountCode : String) : List[CsmDiscount] = {
+		var list = CsmDiscount.findWithDiscount(db.connect(),discountCode)
+		
+		return list
 	}
 
-	def findJobListByJobName(jobName : String) : Array[Array[Any]] = {
-		return Array[Array[Any]](List("CSADDCSEGMENT","TTHP-966BGE","DIR040","Thitaree Thongnamsap","Nattaporn Chatmalairut").toArray,
-		Array("CSDCMNPO2R","SNGK-94U6HP", "DIR040","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray,
-		Array("CSDCMNPO2R","SNGK-94U6HP","DIR042","Surisara Ngamtragoonsuk","Nattaporn Chatmalairut").toArray)
+	def findJobListByJobName(jobName : String) : List[CsmDiscount] = {
+		var list = CsmDiscount.findWithJobName(db.connect(),jobName)
+		
+		return list
 	}
 }
