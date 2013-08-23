@@ -4,8 +4,8 @@ import db.{DB}
 import dao.{CsmDiscount}
 
 class QuickHeal {
-	val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
-	// val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
+	// val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
+	val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
 	val user = "amdapp22"
 	val pass = "amdapp22"
 	val db = DB(url,user,pass)
