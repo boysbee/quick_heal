@@ -105,23 +105,5 @@ class DBSpec extends FlatSpec with GivenWhenThen {
 		then("result not null and found data") 
 
 		assert(null != result)
-	//	while(result.next()){
-	//		var docTypeName: String = result.getString("doc_type_name")
-	//	}
-	//	assert("test" == docTypeName)
-	}
-	it should "delete " in {
-		val f = fixture
-		given("sql delete") 
-
-		val sql = "delete csm_discount where discount_code = 'DIR050'"
-
-		when("execute update")
-
-		val result = f.db.execute(sql)
-
-		then("result is true")
-
-		assert( true == result)
 	}
 }
