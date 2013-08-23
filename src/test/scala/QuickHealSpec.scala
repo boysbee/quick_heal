@@ -43,7 +43,7 @@ class QuickHealSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 			var ucrNo = "Test"
 			when("call method insert")
 			import dao.{CsmDiscount}
-			var data: CsmDiscount = new CsmDiscount(jobName,discountCode,ucrNo,businessOwner,"",devName ,"")
+			var data: CsmDiscount = CsmDiscount(jobName,discountCode,ucrNo,businessOwner,"",devName ,"")
 			var success = quickHeal.insertToCsmDiscount(data)
 			then("insert success")
 			assert(true == success)

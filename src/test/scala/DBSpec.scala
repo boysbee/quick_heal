@@ -5,7 +5,8 @@ class DBSpec extends FlatSpec with GivenWhenThen {
 	
 	def fixture =
 	    new {
-		    val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
+		    // val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
+		    val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
 			val user = "amdapp22"
 			val pass = "amdapp22"
 
@@ -75,22 +76,22 @@ class DBSpec extends FlatSpec with GivenWhenThen {
 		assert(null != result)
 	}
 
-	it should "insert " in {
-		val f = fixture
+	// it should "insert " in {
+	// 	val f = fixture
 
-		given ("sql insert ")
+	// 	given ("sql insert ")
 
-		val sql = "insert into csm_discount (job_name,ucr_no,discount_code,business_owner,dev_name,sys_creation_date,sys_update_date) values ('CSDCMNPO2R','SNGK-94U6HP', 'DIR040','Surisara Ngamtragoonsuk','Nattaporn Chatmalairut',sysdate,sysdate)"
+	// 	val sql = "insert into csm_discount (job_name,ucr_no,discount_code,business_owner,dev_name,sys_creation_date,sys_update_date) values ('CSDCMNPO2R','SNGK-94U6HP', 'DIR040','Surisara Ngamtragoonsuk','Nattaporn Chatmalairut',sysdate,sysdate)"
 
-		when("execute")
+	// 	when("execute")
 
-		val result = f.db.execute(sql)
+	// 	val result = f.db.execute(sql)
 
-		then ("result is true")
+	// 	then ("result is true")
 
-		assert( true == result)
+	// 	assert( true == result)
 
-	}
+	// }
 	it should "retreieve by id" in {
 		val f = fixture
 		given ("sql select")

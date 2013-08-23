@@ -6,8 +6,8 @@ class CsmDiscountSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 	import db._
 	def fixture =
 		new {
-			val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
-			// val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
+			// val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
+			val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
 			val user = "amdapp22"
 			val pass = "amdapp22"
 
@@ -52,7 +52,7 @@ class CsmDiscountSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 			var ucrNo = "Test"
 			when("call method insert")
 			import dao.{CsmDiscount}
-			var data: CsmDiscount = new CsmDiscount(jobName,discountCode,ucrNo,businessOwner,"",devName ,"")
+			var data: CsmDiscount = CsmDiscount(jobName,discountCode,ucrNo,businessOwner,"",devName ,"")
 			var success = CsmDiscount.insertToCsmDiscount(fixture.conn,data)
 			then("insert success")
 			assert(true == success)
