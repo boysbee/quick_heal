@@ -49,7 +49,8 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
 	def top = new MainFrame {
 		title = "Quick Heal"
-		size = new Dimension(800,600)
+		size = new Dimension(640,480)
+		location  = new java.awt.Point((640/2), (480/2))
 	    menuBar = new MenuBar {
 			contents += new Menu("Action") {
 				contents += new MenuItem(Action("Search") {
@@ -72,7 +73,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
 		def callInsertForm(){
 			contents = new BoxPanel(Orientation.Vertical) {
-				peer.setPreferredSize(new Dimension(640, 480));
+				peer.setPreferredSize(new Dimension(640, 480))
 				contents += makeInsertPanel
 				border = Swing.EmptyBorder(0, 0, 0, 0)
 			}
@@ -80,7 +81,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
 		def callSearchForm(){
 			contents = new BoxPanel(Orientation.Vertical) {
-				peer.setPreferredSize(new Dimension(640, 480));
+				peer.setPreferredSize(new Dimension(640, 480))
 				var searchPanel = makeSearchPanel()
 
 				var resultPanel = makeResultPanel()
@@ -97,6 +98,8 @@ object QuickHealDesktop extends SimpleSwingApplication {
 				border = Swing.EmptyBorder(0, 0, 0, 0)
 			}
 		}
+
+
 	}
 
 	
@@ -105,7 +108,8 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
 	}
 
-	def makeSearchPanel() : GridPanel = {
+	def makeSearchPanel() : BoxPanel = {
+		//peer.setPreferredSize(new Dimension(200, 150))
 			// search panel select
 		val discountLabel = new Label {
 			text = "Discount : "
@@ -167,7 +171,8 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
 		})
 
-		var searchPanel = new GridPanel(5,4) {
+		var searchPanel = new GridPanel(4,4) {
+			
 			contents += discountLabel
 			contents += discountTextField
 			contents += jobNameLabel
@@ -180,16 +185,13 @@ object QuickHealDesktop extends SimpleSwingApplication {
 			contents += socTextField
 			contents += propoLabel
 			contents += propoTextField
-		}
-		var searchButtonPanel = new GridPanel(1,2) {
-			contents += searchButton	
-
-		}
-		var searcMainPanel = new GridPanel(2,1) {
-				
-			contents += searchPanel
-			contents += searchButtonPanel			
+			contents += searchButton
+			contents += new Label("")
 			
+		}
+		
+		var searcMainPanel = new BoxPanel(Orientation.Vertical) {
+			contents += searchPanel
 		}
 		
 		return searcMainPanel;
