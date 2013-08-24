@@ -29,8 +29,8 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
     	
 		case TableRowsSelected(source, range, false) =>
 		outputSelection(source, "Rows selected, changes: %s" format range)
-		case TableColumnsSelected(source, range, false) =>
-		outputSelection(source, "Columns selected, changes: %s" format range)
+		// case TableColumnsSelected(source, range, false) =>
+		// outputSelection(source, "Columns selected, changes: %s" format range)
 		case TableColumnHeaderSelected(source, column) =>
 		outputSelection(source, "Column header %s selected" format column)
 		// case ButtonClicked(`searchButton`) => findResult()
@@ -153,7 +153,15 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 		val colId = table.selection.columns.leadIndex
 		val rows = table.selection.rows.mkString(", ")
 		val cols = table.selection.columns.mkString(", ")
-		println("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
+		val value = table.model.getValueAt(rowId,colId)
+		println("%s\n  Lead: %s, %s; Rows: %s; Columns: %s ; Value: %s\n" format (msg, rowId, colId, rows, cols,value))
+		// "Job-Name","UCR #","Discount","Business Owner","Developer"
+		var jobName : String = table.model.getValueAt(rowId,0).toString
+		var ucrNo : String = table.model.getValueAt(rowId,1).toString
+		var discountCode : String  = table.model.getValueAt(rowId,2).toString
+		var businessOwner : String = table.model.getValueAt(rowId,3).toString
+		var devName : String = table.model.getValueAt(rowId,4).toString
+		new JobInfo(jobName ,discountCode,ucrNo,businessOwner,devName)
 		//output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
 	}
 }
