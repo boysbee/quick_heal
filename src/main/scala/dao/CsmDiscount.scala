@@ -46,21 +46,21 @@ object CsmDiscount {
 
 
 	def findCsmDiscount(conn : Connection , jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String) : CsmDiscount = {
-		var sql = "select * from csm_discount where 1=1"
+		var sql = "select * from csm_discount where 1=1 "
 		if(jobName != null && !"".equals(jobName)) { 
-			sql += "and job_name like '%" + jobName + "%'"
+			sql += " and job_name like '%" + jobName + "%'"
 		}
 		if( discountCode != null && !"".equals(discountCode)) { 
-			sql += "and discount_code like '%" + discountCode + "%'"
+			sql += " and discount_code like '%" + discountCode + "%'"
 		}
 		if(ucrNo != null && !"".equals(ucrNo)) { 
-			sql += "and ucr_no like '%" + ucrNo + "%'"
+			sql += " and ucr_no like '%" + ucrNo + "%'"
 		}
 		if(businessOwner != null && !"".equals(businessOwner)) { 
-			sql += "and businessOwner like '%" + businessOwner + "%'"
+			sql += "and business_owner like '%" + businessOwner + "%'"
 		}
 		if(devName != null && !"".equals(devName)) { 
-			sql += "and dev_name like '%" + devName + "%'"
+			sql += " and dev_name like '%" + devName + "%'"
 		}
 
 		println("@@ query -> %s".format(sql))
@@ -77,24 +77,24 @@ object CsmDiscount {
 
 	def findCsmDiscount(conn : Connection , jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = {
 
-		var sql = "select * from csm_discount where 1=1"
+		var sql = "select * from csm_discount where 1=1 "
 		if(jobName != null && !"".equals(jobName)) { 
-			sql += "and job_name like '%" + jobName + "%'"
+			sql += " and job_name like '%" + jobName + "%'"
 		}
 		if( discountCode != null && !"".equals(discountCode)) { 
-			sql += "and discount_code like '%" + discountCode + "%'"
+			sql += " and discount_code like '%" + discountCode + "%'"
 		}
 		if(keyword != null && !"".equals(keyword)) { 
-			sql += "and keyword like '%" + keyword + "%'"
+			sql += " and keyword like '%" + keyword + "%'"
 		}
 		if(pp != null && !"".equals(pp)) { 
-			sql += "and pp like '%" + pp + "%'"
+			sql += " and pp like '%" + pp + "%'"
 		}
 		if(soc != null && !"".equals(soc)) { 
-			sql += "and soc like '%" + soc + "%'"
+			sql += " and soc like '%" + soc + "%'"
 		}
 		if(propo != null && !"".equals(propo)) { 
-			sql += "and propo like '%" + propo + "%'"
+			sql += " and propo like '%" + propo + "%'"
 		}
 
 		println("@@ query -> %s".format(sql))
@@ -211,7 +211,14 @@ object CsmDiscount {
 		return check
 	}
 
-	def transform(rs : java.sql.ResultSet) : CsmDiscount = CsmDiscount(rs.getString("job_name"),rs.getString("discount_code"),rs.getString("ucr_no"),rs.getString("business_owner"),rs.getString("keyword"),rs.getString("dev_name"),rs.getString("remark"))
+	def transform(rs : java.sql.ResultSet) : CsmDiscount = CsmDiscount(rs.getString("job_name"),
+		rs.getString("discount_code"),rs.getString("ucr_no"),rs.getString("business_owner"),
+		rs.getString("keyword"),rs.getString("dev_name"),rs.getString("remark"),
+		rs.getString("pp"),rs.getString("propo"),rs.getString("soc"),
+		rs.getString("actv_code"),rs.getString("actv_rsn_code"),
+		rs.getString("acc_type"),rs.getString("acc_cate"),rs.getString("benefit"),
+		rs.getString("advance_payment"),rs.getDate("project_start_date"),
+		rs.getDate("project_end_date"),rs.getDate("sys_creation_date"),rs.getDate("sys_update_date"))
 
 
 }
