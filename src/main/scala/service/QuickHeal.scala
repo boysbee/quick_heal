@@ -13,8 +13,12 @@ class QuickHeal {
 
 	def findCsmDiscount(jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = { 
 		var list = CsmDiscount.findCsmDiscount(db.connect(),jobName,discountCode,keyword,pp,soc,propo)
-		
 		return list
+	}
+
+	def findCsmDiscount(jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String) : CsmDiscount = {
+		var csmDiscount = CsmDiscount.findCsmDiscount(db.connect(),jobName,ucrNo,discountCode,businessOwner,devName)
+		return csmDiscount
 	}
 	def findJobListByDiscountCode(discountCode : String) : List[CsmDiscount] = {
 		var list = CsmDiscount.findWithDiscount(db.connect(),discountCode)
