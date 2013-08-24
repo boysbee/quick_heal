@@ -37,7 +37,7 @@ class DB(url:String , user : String , pass : String) {
 			connection = java.sql.DriverManager.getConnection(dbUrl, dbUser, dbPassword)
 
 		} catch {
-			case e => e.printStackTrace
+			case e : Throwable => e.printStackTrace
 		}
 		return connection
 	}
@@ -52,7 +52,7 @@ class DB(url:String , user : String , pass : String) {
 			result = stmt.executeQuery(sql);
 
 		} catch {
-			case e => e.printStackTrace
+			case e : Throwable => e.printStackTrace
 		}
 		finally {
 			if( null != connection ) {
@@ -60,7 +60,7 @@ class DB(url:String , user : String , pass : String) {
 					connection.close()
 				}
 				catch {
-					case e => None
+					case e : Throwable => None
 				}
 				
 			}
@@ -85,7 +85,7 @@ class DB(url:String , user : String , pass : String) {
 			}
 		} 
 		catch {
-			case e => e.printStackTrace
+			case e : Throwable => e.printStackTrace
 		}
 		finally {
 			if( null != connection ) {
@@ -93,7 +93,7 @@ class DB(url:String , user : String , pass : String) {
 					connection.close()
 				}
 				catch {
-					case e => None
+					case e : Throwable => None
 				}
 				
 			}
