@@ -19,29 +19,83 @@ object CsmDiscount {
 		"","","",
 		"","",null,
 		null,null,null)
+	def apply(jobName:String,discountCode:String,ucrNo : String , businessOwner:String,
+		keyword:String,devName :String,remark:String,
+		pp : String, propo :String , soc : String , actvCode : String , 
+		actvRsnCode : String , accType : String , accCate : String, 
+		benefit : String , advancePayment : String) = new CsmDiscount(jobName,
+		discountCode,ucrNo,businessOwner,keyword , devName,remark ,
+		pp,propo,soc,actvCode,
+		actvRsnCode,accType,accCate,
+		benefit,advancePayment,null,
+		null,new java.util.Date(),new java.util.Date())
 
+
+	def apply(jobName:String,discountCode:String,ucrNo : String , businessOwner:String,
+		keyword:String,devName :String,remark:String,
+		pp : String, propo :String , soc : String , actvCode : String , 
+		actvRsnCode : String , accType : String , accCate : String, 
+		benefit : String , advancePayment : String,
+		projectStartDate : java.util.Date , 
+		projectEndDate : java.util.Date) = new CsmDiscount(jobName,
+		discountCode,ucrNo,businessOwner,keyword , devName,remark ,
+		pp,propo,soc,actvCode,
+		actvRsnCode,accType,accCate,
+		benefit,advancePayment,projectStartDate,
+		projectEndDate,new java.util.Date(),new java.util.Date())
+
+
+	def findCsmDiscount(conn : Connection , jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String) : CsmDiscount = {
+		var sql = "select * from csm_discount where 1=1"
+		if(jobName != null && !"".equals(jobName)) { 
+			sql += "and job_name like '%" + jobName + "%'"
+		}
+		if( discountCode != null && !"".equals(discountCode)) { 
+			sql += "and discount_code like '%" + discountCode + "%'"
+		}
+		if(ucrNo != null && !"".equals(ucrNo)) { 
+			sql += "and ucr_no like '%" + ucrNo + "%'"
+		}
+		if(businessOwner != null && !"".equals(businessOwner)) { 
+			sql += "and businessOwner like '%" + businessOwner + "%'"
+		}
+		if(devName != null && !"".equals(devName)) { 
+			sql += "and dev_name like '%" + devName + "%'"
+		}
+
+		println("@@ query -> %s".format(sql))
+		var list = using(conn.createStatement) { st=>
+			using(st.executeQuery(sql)) { rs =>
+				bmap(rs.next){
+					transform(rs)
+				}
+			}
+		}
+
+		return if (list != null && list.size > 0 ) list(0) else null
+	}
 
 	def findCsmDiscount(conn : Connection , jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = {
 
 		var sql = "select * from csm_discount where 1=1"
-		// if(jobName != null ) { 
-		// 	sql += "and job_name like '%" + jobName + "%'"
-		// }
-		// if( discountCode != null ) { 
-		// 	sql += "and discount_code like '%" + discount_code + "%'"
-		// }
-		// if(keyword != null ) { 
-		// 	sql += "and keyword like '%" + keyword + "%'"
-		// }
-		// if(pp != null ) { 
-		// 	sql += "and pp like '%" + pp + "%'"
-		// }
-		// if(soc != null ) { 
-		// 	sql += "and soc like '%" + soc + "%'"
-		// }
-		// if(propo != null ) { 
-		// 	sql += "and propo like '%" + propo + "%'"
-		// }
+		if(jobName != null && !"".equals(jobName)) { 
+			sql += "and job_name like '%" + jobName + "%'"
+		}
+		if( discountCode != null && !"".equals(discountCode)) { 
+			sql += "and discount_code like '%" + discountCode + "%'"
+		}
+		if(keyword != null && !"".equals(keyword)) { 
+			sql += "and keyword like '%" + keyword + "%'"
+		}
+		if(pp != null && !"".equals(pp)) { 
+			sql += "and pp like '%" + pp + "%'"
+		}
+		if(soc != null && !"".equals(soc)) { 
+			sql += "and soc like '%" + soc + "%'"
+		}
+		if(propo != null && !"".equals(propo)) { 
+			sql += "and propo like '%" + propo + "%'"
+		}
 
 		println("@@ query -> %s".format(sql))
 		var list = using(conn.createStatement) { st=>
@@ -103,7 +157,7 @@ object CsmDiscount {
 			}
 		} 
 		catch {
-			case e => e.printStackTrace
+			case e : Throwable => e.printStackTrace
 		}
 		finally {
 			if( null != conn ) {
@@ -111,7 +165,7 @@ object CsmDiscount {
 					conn.close()
 				}
 				catch {
-					case e => None
+					case e : Throwable => None
 				}
 				
 			}
@@ -141,7 +195,7 @@ object CsmDiscount {
 			}
 		} 
 		catch {
-			case e => e.printStackTrace
+			case e : Throwable => e.printStackTrace
 		}
 		finally {
 			if( null != conn ) {
@@ -149,7 +203,7 @@ object CsmDiscount {
 					conn.close()
 				}
 				catch {
-					case e => None
+					case e : Throwable => None
 				}
 				
 			}
