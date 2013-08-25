@@ -1,8 +1,9 @@
 package form
 
 import scala.swing._
+import dao._
 
-class TestJob extends BoxPanel(Orientation.Vertical){
+class TestJob (csmDiscount : CsmDiscount)  extends BoxPanel(Orientation.Vertical){
 	peer.setPreferredSize(new Dimension(640, 480))
 	val ui = new BoxPanel(Orientation.Vertical) {
 		val findPanel = new FlowPanel {
