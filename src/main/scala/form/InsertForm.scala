@@ -14,55 +14,25 @@ class InsertForm extends BoxPanel(Orientation.Vertical) {
 	def makeInsertPanel : BorderPanel = {
 		preferredSize = new Dimension(400, 300)
 		// job name text field
-		val jobNameTextField = new TextField {
-			columns = 10
-		}
+		val jobNameTextField = new TextField ("",10)
 		// discound code text field
-		val discountCodeTextField = new TextField {
-			columns = 10
-		}
+		val discountCodeTextField = new TextField ("",10)
 		// ucr no text field
-		val ucrNoTextField = new TextField {
-			columns = 10
-		}
+		val ucrNoTextField = new TextField ("",10)
 		// business owner text field
-		val businessOwnerTextField = new TextField {
-			columns = 10
-		}
+		val businessOwnerTextField = new TextField ("",10)
 		// dev name text field
-		val devNameTextField = new TextField {
-			columns = 10
-		}
-		val keywordTextField = new TextField {
-			columns = 10
-		}
-		var pricePlanTextField = new TextField{
-			columns = 10
-		}
-		var socTextField = new TextField{
-			columns = 10
-		}
-		var propositionCodeTextField = new TextField{
-			columns = 10
-		}
-		var actvCodeTextField = new TextField{
-			columns = 10
-		}
-		var actvRsnCodeTextField = new TextField{
-			columns = 10
-		}
-		var benefitTextField = new TextField{
-			columns = 10
-		}
-		var advancePaymentTextField = new TextField{
-			columns = 10
-		}
-		var accCateTextField = new TextField{
-			columns = 10
-		}
-		var accTypeTextField = new TextField{
-			columns = 10
-		}
+		val devNameTextField = new TextField ("",10)
+		val keywordTextField = new TextField ("",10)
+		var pricePlanTextField = new TextField ("",10)
+		var socTextField = new TextField ("",10)
+		var propositionCodeTextField = new TextField ("",10)
+		var actvCodeTextField = new TextField ("",10)
+		var actvRsnCodeTextField = new TextField ("",10)
+		var benefitTextField = new TextField ("",10)
+		var advancePaymentTextField = new TextField ("",10)
+		var accCateTextField = new TextField ("",10)
+		var accTypeTextField = new TextField ("",10)
 		var insertPanel = new GridPanel(9,4) {
 			hGap = 3
 			vGap = 3
