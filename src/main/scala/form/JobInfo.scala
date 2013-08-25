@@ -5,15 +5,14 @@ import scala.swing.BorderPanel.Position._
 import service._
 import dao._
 import scala.collection.mutable.ListBuffer
-class JobInfo (jobName : String , ucrNo : String , discountCode : String , 
-  businessOwner : String , devName : String)  extends BoxPanel(Orientation.Vertical) {
+class JobInfo (csmDiscount : CsmDiscount)  extends BoxPanel(Orientation.Vertical) {
 
  val pName : List[String] =   List[String](
   "JOB_NAME",  "DISCOUNT_CODE",  "UCR_NO",    "KEYWORD ",  "PP ",  "SOC",  "PROPO ",  "ACTV_CODE ",  "ACTV_RSN_CODE",  "ACC_TYPE",
   "ACC_CATE",  "BENEFIT",  "ADVANCE_PAYMENT",  "BUSINESS_OWNER",  "DEV_NAME",  "PROJECT_START_DATE",
   "PROJECT_END_DATE",  "REMARK",  "SYS_CREATION_DATE",  "SYS_UPDATE_DATE")
 
-  println("job_name: %s ; ucr_no: %s; discount_code: %s; business_owner: %s; dev_name: %s".format (jobName,ucrNo,discountCode,businessOwner,devName))
+  println("job_name: %s ; ucr_no: %s; discount_code: %s; business_owner: %s; dev_name: %s".format (csmDiscount.jobName,csmDiscount.ucrNo,csmDiscount.discountCode,csmDiscount.businessOwner,csmDiscount.devName))
   var csmDiscount = findCsmDiscount(jobName,ucrNo,discountCode,businessOwner,devName)
   //contents = makeInfoPanel(null)
   contents += makeInfoPanel(csmDiscount)
@@ -182,10 +181,5 @@ class JobInfo (jobName : String , ucrNo : String , discountCode : String ,
 
     return infoPanel
   }
-  def findCsmDiscount(jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String) : CsmDiscount = {
-    val quickHeal = new QuickHeal()
-    var csmDiscount = quickHeal.findCsmDiscount(jobName,ucrNo,discountCode,businessOwner,devName)
-
-    return csmDiscount
-  }
+  
 }
