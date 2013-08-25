@@ -161,7 +161,7 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 		var discountCode : String  = table.model.getValueAt(rowId,2).toString
 		var businessOwner : String = table.model.getValueAt(rowId,3).toString
 		var devName : String = table.model.getValueAt(rowId,4).toString
-		new JobInfo(jobName ,ucrNo,discountCode,businessOwner,devName)
+		new InfoDialog(jobName ,ucrNo,discountCode,businessOwner,devName)
 		//output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
 	}
 }

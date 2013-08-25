@@ -4,7 +4,8 @@ import scala.swing._
 import scala.swing.BorderPanel.Position._
 import service._
 import dao._
-class JobInfo (jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String)  extends Dialog {
+class JobInfo (jobName : String , ucrNo : String , discountCode : String , 
+  businessOwner : String , devName : String)  extends BoxPanel(Orientation.Vertical) {
 
  val pName : List[String] =   List[String](
   "JOB_NAME",
@@ -28,16 +29,10 @@ class JobInfo (jobName : String , ucrNo : String , discountCode : String , busin
   "SYS_CREATION_DATE",
   "SYS_UPDATE_DATE")
 
-  title = "Detail"
-  modal = true
   println("job_name: %s ; ucr_no: %s; discount_code: %s; business_owner: %s; dev_name: %s".format (jobName,ucrNo,discountCode,businessOwner,devName))
   var csmDiscount = findCsmDiscount(jobName,ucrNo,discountCode,businessOwner,devName)
-  println("@@ -> " + csmDiscount.toString)
   //contents = makeInfoPanel(null)
-  contents = makeInfoPanel(csmDiscount)
-
-  centerOnScreen()
-  open()
+  contents += makeInfoPanel(csmDiscount)
 
 
   def makeInfoPanel (csmDiscount : CsmDiscount) : BoxPanel = {
