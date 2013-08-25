@@ -4,16 +4,21 @@ import scala.swing._
 import dao._
 import service._
 class InfoDialog (jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String)  extends Dialog {
+
+  val quickHeal = new QuickHeal()
+
+  var csmDiscount = quickHeal.findCsmDiscount(jobName,ucrNo,discountCode,businessOwner,devName)
+  
 	val ui = new BoxPanel(Orientation.Vertical) {
       val tabs = new TabbedPane {
         import TabbedPane._
         
         pages += new Page("Job Info",new BoxPanel(Orientation.Vertical) {
-          var csmDiscount = findCsmDiscount(jobName ,ucrNo,discountCode,businessOwner,devName)
-        	contents += new JobInfo(jobName ,ucrNo,discountCode,businessOwner,devName)
+         
+        	contents += new JobInfo(csmDiscount)
       	} )
         pages += new Page("Test",new BoxPanel(Orientation.Vertical) {
-        	contents +=	new TestJob()
+        	contents +=	new TestJob(csmDiscount)
        	})
         //pages += new Page("Text Editor", TextEditor.ui)
       }
@@ -31,10 +36,4 @@ class InfoDialog (jobName : String , ucrNo : String , discountCode : String , bu
 	open()
 
 
-def findCsmDiscount(jobName : String , ucrNo : String , discountCode : String , businessOwner : String , devName : String) : CsmDiscount = {
-    val quickHeal = new QuickHeal()
-    var csmDiscount = quickHeal.findCsmDiscount(jobName,ucrNo,discountCode,businessOwner,devName)
-
-    return csmDiscount
-  }
 }

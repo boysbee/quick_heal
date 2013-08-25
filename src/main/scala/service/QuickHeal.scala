@@ -39,4 +39,18 @@ class QuickHeal {
 	def deleteFromCsmDiscount(jobName : String , discountCode : String) : Boolean = {
 		return CsmDiscount.deleteByJobNameAndDiscountCode( db.connect(), jobName, discountCode)
 	}
+
+	def findPropositionCode(subscriberNo : String , ban : Int ) : List[String] = {
+		return List[String]()
+	}
+
+	def findSoc(subscriberNo : String , ban : Int ) : List[String] = {
+		return List[String]()
+	} 
+
+	def findPricePlan(subscriberNo : String , ban : Int ) : List[String] = {
+		return List[String]()
+	}
+
+
 }

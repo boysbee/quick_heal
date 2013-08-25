@@ -54,7 +54,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		}
 
 		def callTestForm(){
-			// contents = new form.TestJob
+			contents = new form.JobSelect
 		}
 
 

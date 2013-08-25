@@ -13,7 +13,6 @@ class JobInfo (csmDiscount : CsmDiscount)  extends BoxPanel(Orientation.Vertical
   "PROJECT_END_DATE",  "REMARK",  "SYS_CREATION_DATE",  "SYS_UPDATE_DATE")
 
   println("job_name: %s ; ucr_no: %s; discount_code: %s; business_owner: %s; dev_name: %s".format (csmDiscount.jobName,csmDiscount.ucrNo,csmDiscount.discountCode,csmDiscount.businessOwner,csmDiscount.devName))
-  var csmDiscount = findCsmDiscount(jobName,ucrNo,discountCode,businessOwner,devName)
   //contents = makeInfoPanel(null)
   contents += makeInfoPanel(csmDiscount)
 
