@@ -16,7 +16,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 
     reactions += {
     	case WindowClosing(e) => System.exit(0)
-}
+	}
 
 	
 
@@ -54,10 +54,7 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		}
 
 		def callTestForm(){
-			contents = new BoxPanel(Orientation.Vertical) {
-				peer.setPreferredSize(new Dimension(640, 480))
-				border = Swing.EmptyBorder(0, 0, 0, 0)
-			}
+			// contents = new form.TestJob
 		}
 
 
@@ -68,16 +65,5 @@ object QuickHealDesktop extends SimpleSwingApplication {
 		import javax.swing.UIManager
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
 	}
-
-	
-
-	def makeTestPanel : FlowPanel = {
-		var testPanel = new FlowPanel {
-
-		}
-		return testPanel
-	}
-
-	
 
 }
