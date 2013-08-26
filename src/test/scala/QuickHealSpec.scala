@@ -2,6 +2,7 @@ import org.scalatest._
 import org.scalatest.matchers._
 import service.{QuickHeal}
 
+
 class QuickHealSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 
 	val fixure = 
@@ -60,6 +61,55 @@ class QuickHealSpec extends FreeSpec with GivenWhenThen with ShouldMatchers {
 			var success = quickHeal.deleteFromCsmDiscount(jobName,discountCode)
 			then("delete success")
 			assert(true == success)	
+		}
+
+		"It should find list of proposition code" in {
+			val quickHeal = fixure.quickHeal
+
+			given("a correct subscriber and ban")
+			val subscriber : String = "0863076870"
+			val ban :Int  = 851402508
+			when("use findProposition")
+			var list2 = quickHeal.findPropositionCode(subscriber,ban)
+			then("return list is not null")
+
+			assert(null != list2)
+		}
+
+		"It should not find list of proposition code" in {
+			val quickHeal = fixure.quickHeal
+			given("a wrong subscriber and ban")
+			var subscriber : String = "0863076871"
+			var ban : Int = 851402508
+			when("use findProposition")
+			var list1 = quickHeal.findPropositionCode(subscriber,ban)
+			then("return list is null")
+
+			assert(null == list1)
+		}
+
+		"It should find list of soc" in {
+			val quickHeal = fixure.quickHeal
+			given("a subscriber and ban")
+			var subscriber : String = "0863076871"
+			var ban : Int = 851402508
+			when("use findSoc")
+			var list1 = quickHeal.findSoc(subscriber,ban)
+			then("return list is null")
+
+			assert(null != list1)
+		}
+
+		"It should find price plan " in {
+			val quickHeal = fixure.quickHeal
+			given("a subscriber and ban")
+			var subscriber : String = "0863076871"
+			var ban : Int = 851402508
+			when("use findPricePlan")
+			var list1 = quickHeal.findPricePlan(subscriber,ban)
+			then("return list is null")
+
+			assert(null != list1)
 		}
 	}
 }
