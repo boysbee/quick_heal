@@ -1,13 +1,13 @@
 package service
 
-import db.{DB}
-import dao.{CsmDiscount}
+import db.{DB,DBConfig}
+import dao._
 
 class QuickHeal {
 	// val url = "jdbc:oracle:thin:@172.16.49.14:1521:TEST01"
-	val url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
-	val user = "amdapp22"
-	val pass = "amdapp22"
+	val url = DBConfig.url
+	val user = DBConfig.user
+	val pass = DBConfig.pass
 	val db = DB(url,user,pass)
 
 
@@ -40,16 +40,16 @@ class QuickHeal {
 		return CsmDiscount.deleteByJobNameAndDiscountCode( db.connect(), jobName, discountCode)
 	}
 
-	def findPropositionCode(subscriberNo : String , ban : Int ) : List[String] = {
-		return List[String]()
+	def findPropositionCode(subscriberNo : String , ban : Int ) : List[SubscriberContract] = {
+		return SubscriberContract.findProposition(db.connect(),subscriberNo,ban)
 	}
 
-	def findSoc(subscriberNo : String , ban : Int ) : List[String] = {
-		return List[String]()
+	def findSoc(subscriberNo : String , ban : Int ) : List[ServiceAgreement] = {
+		return ServiceAgreement.findSoc(db.connect(),subscriberNo,ban)
 	} 
 
-	def findPricePlan(subscriberNo : String , ban : Int ) : List[String] = {
-		return List[String]()
+	def findPricePlan(subscriberNo : String , ban : Int ) : List[ServiceAgreement] = {
+		return ServiceAgreement.findPricePlan(db.connect(),subscriberNo,ban)
 	}
 
 
