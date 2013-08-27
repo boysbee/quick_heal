@@ -4,6 +4,7 @@ import scala.swing.event.{TableRowsSelected, TableEvent, TableColumnsSelected, B
 import db.{DB}
 import service.{QuickHeal}
 import dao.{CsmDiscount}
+import util.{DateUtil}
 
 class InsertForm extends BoxPanel(Orientation.Vertical) {
 	preferredSize = new Dimension(640, 480)
@@ -33,7 +34,10 @@ class InsertForm extends BoxPanel(Orientation.Vertical) {
 		var advancePaymentTextField = new TextField ("",10)
 		var accCateTextField = new TextField ("",10)
 		var accTypeTextField = new TextField ("",10)
-		var insertPanel = new GridPanel(9,4) {
+		var remarkTextField = new TextField ("",10)
+		var projectStartDateTextField = new TextField ("",10)
+		var projectEndDateTextField = new TextField ("",10)
+		var insertPanel = new GridPanel(11,4) {
 			hGap = 3
 			vGap = 3
 			contents += new Label("Job Name :")
@@ -66,9 +70,12 @@ class InsertForm extends BoxPanel(Orientation.Vertical) {
 			contents += benefitTextField
 			contents += new Label("Advance Payment : ")
 			contents += advancePaymentTextField
-			contents += new Label("")
-			contents += new Label("")
-			contents += new Label("")
+			contents += new Label("Remark : ")
+			contents += remarkTextField
+			contents += new Label("Project Start Date : ")
+			contents += projectStartDateTextField
+			contents += new Label("Project End Date : ")
+			contents += projectEndDateTextField
 			contents += new Label("")
 			contents += new Button(Action ("Insert"){
 				
@@ -78,9 +85,28 @@ class InsertForm extends BoxPanel(Orientation.Vertical) {
 				var devName = devNameTextField.text
 				var businessOwner = businessOwnerTextField.text
 				var ucrNo = ucrNoTextField.text
+				var keyword = keywordTextField.text
+				var pp = pricePlanTextField.text
+				var soc = socTextField.text
+				var propo = propositionCodeTextField.text
+				var actvCode = actvCodeTextField.text
+				var actvRsnCode = actvRsnCodeTextField.text
+				var accCate = accCateTextField.text
+				var accType = accTypeTextField.text
+				var benefit = benefitTextField.text
+				var advancePayment = advancePaymentTextField.text
+				var remark = remarkTextField.text
+
+				var projectStartDateStr = projectStartDateTextField.text
+				var projectEndDateStr = projectEndDateTextField.text
+				var projectStartDateComplete : java.util.Date = DateUtil.str2Date(projectStartDateStr,"dd/MM/yyyy")
+				var projectEndDateComplete : java.util.Date = DateUtil.str2Date(projectEndDateStr,"dd/MM/yyyy")
 				val quickHeal = new QuickHeal
 
-				var data: CsmDiscount = CsmDiscount(jobName,discountCode,ucrNo,businessOwner,"",devName ,"")
+				var data: CsmDiscount = CsmDiscount(jobName,discountCode,ucrNo,businessOwner,
+					keyword,devName ,remark,pp,propo  , soc  , actvCode , actvRsnCode , accType  ,
+					accCate , benefit  , advancePayment  ,projectStartDateComplete,projectEndDateComplete)
+
 				var success = quickHeal.insertToCsmDiscount(data);
 				if( success ) {
 					Dialog.showMessage(this, "Insert to CSM_DISCOUNT success", "Insert Success", Dialog.Message.Info)

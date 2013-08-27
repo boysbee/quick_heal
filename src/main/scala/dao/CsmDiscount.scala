@@ -75,7 +75,7 @@ object CsmDiscount {
 		return if (list != null && list.size > 0 ) list(0) else null
 	}
 
-	def findCsmDiscount(conn : Connection , jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = {
+	def findListCsmDiscount(conn : Connection , jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = {
 
 		var sql = "select * from csm_discount where 1=1 "
 		if(jobName != null && !"".equals(jobName)) { 
@@ -140,7 +140,25 @@ object CsmDiscount {
 	
 	def insertToCsmDiscount(conn: Connection, item : CsmDiscount ) : Boolean = {
 		var check  = false
-		val sql = "insert into csm_discount (job_name,discount_code,ucr_no,business_owner,dev_name,sys_creation_date, sys_update_date) values('%s','%s','%s','%s','%s',sysdate,sysdate)".format(item.jobName,item.discountCode,item.ucrNo,item.businessOwner,item.devName)
+		var sql = ""
+		sql += "INSERT INTO CSM_DISCOUNT ( "
+		sql += "  DISCOUNT_CODE, SYS_CREATION_DATE, SYS_UPDATE_DATE," 
+		sql += "   JOB_NAME, UCR_NO, BUSINESS_OWNER, "
+		sql += "   KEYWORD, PP, SOC, "
+		sql += "   PROPO, ACTV_CODE, ACTV_RSN_CODE, "
+		sql += "  ACC_TYPE, ACC_CATE, PROJECT_START_DATE, "
+		sql += "   PROJECT_END_DATE, BENEFIT, ADVANCE_PAYMENT, "
+		sql += "  DEV_NAME, REMARK) "
+		sql += "VALUES ( '%s', '%s', sysdate,"
+		sql += "   sysdate ,'%s' ,'%s' ,"
+		sql += "    '%s', '%s','%s' ,"
+		sql += "   '%s' ,'%s' , '%s',"
+		sql += "   '%s' , '%s', to_date('%s','dd/MM/yyyy'),"
+		sql += "   to_date('%s','dd/MM/yyyy') ,'%s' ,'%s' ,"
+		sql += "    '%s', '%s')"
+		sql = sql.format(item.discountCode,item.jobName,item.ucrNo,item.businessOwner
+			,item.keyword,item.pp,item.soc,item.propo,item.actvCode,item.actvRsnCode,item.accType,
+			item.accCate,item.projectStartDate,item.projectEndDate,item.benefit,item.advancePayment,item.devName,item.remark)
 		println("@@ query -> %s".format(sql))
 		
 		try {

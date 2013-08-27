@@ -11,8 +11,8 @@ class QuickHeal {
 	val db = DB(url,user,pass)
 
 
-	def findCsmDiscount(jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = { 
-		var list = CsmDiscount.findCsmDiscount(db.connect(),jobName,discountCode,keyword,pp,soc,propo)
+	def findListCsmDiscount(jobName : String , discountCode : String , keyword : String , pp : String , soc : String , propo : String) : List[CsmDiscount] = { 
+		var list = CsmDiscount.findListCsmDiscount(db.connect(),jobName,discountCode,keyword,pp,soc,propo)
 		return list
 	}
 

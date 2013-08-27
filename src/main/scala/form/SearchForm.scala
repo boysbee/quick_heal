@@ -31,8 +31,8 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 		outputSelection(source, "Rows selected, changes: %s" format range)
 		// case TableColumnsSelected(source, range, false) =>
 		// outputSelection(source, "Columns selected, changes: %s" format range)
-		case TableColumnHeaderSelected(source, column) =>
-		outputSelection(source, "Column header %s selected" format column)
+		// case TableColumnHeaderSelected(source, column) =>
+		// outputSelection(source, "Column header %s selected" format column)
 		// case ButtonClicked(`searchButton`) => findResult()
 
     }
@@ -84,7 +84,7 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 
 		// find button
 		val searchButton = new Button(Action("Find"){
-			println("@@ do insert data.")
+			println("@@ do search data")
 			var jobName = jobNameTextField.text
 			var discountCode = discountTextField.text
 			var keyword = keywordTextField.text
@@ -92,9 +92,8 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 			var soc = socTextField.text
 			var propo = propoTextField.text
 			val quickHeal = new QuickHeal
-			var result = List[CsmDiscount]()
 
-			result = quickHeal.findCsmDiscount(jobName,discountCode,keyword,pp,soc,propo)
+			var result = quickHeal.findListCsmDiscount(jobName,discountCode,keyword,pp,soc,propo)
 		
 			update(result)
 
@@ -137,14 +136,18 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 	}
 
 	def update(result :List[CsmDiscount]) = {
-		var model = table.model
+		val model = table.model.asInstanceOf[javax.swing.table.DefaultTableModel]
+		// var model = table.model
 		var rowCount = model.getRowCount
 		println("@@ previous result count : %d".format(rowCount))
-		model.setNumRows(0)
-		for(item <- result) {
-			model.addRow(Array[AnyRef](item.jobName,item.ucrNo,item.discountCode,item.businessOwner,item.devName))
+		if( result !=null && result.size > 0) {
+			model.setNumRows(0)
+			for(item <- result) {
+				model.addRow(Array[AnyRef](item.jobName,item.ucrNo,item.discountCode,item.businessOwner,item.devName))
+			}
+			
 		}
-		
+		model.fireTableDataChanged()
 		
 	}
 
@@ -161,7 +164,9 @@ class SearchForm extends BoxPanel(Orientation.Vertical) {
 		var discountCode : String  = table.model.getValueAt(rowId,2).toString
 		var businessOwner : String = table.model.getValueAt(rowId,3).toString
 		var devName : String = table.model.getValueAt(rowId,4).toString
-		new InfoDialog(jobName ,ucrNo,discountCode,businessOwner,devName)
+		new InfoDialog(jobName ,ucrNo,discountCode,businessOwner,devName){
+			override lazy val owner = this
+		}
 		//output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
 	}
 }
